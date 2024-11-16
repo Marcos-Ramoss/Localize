@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="pt">
+
+<%- include('partials/head') %>
+<%- include('partials/navbar') %>
+
+    <title>Login</title>
+
+    <body>
+        <div class="container col-6">
+            <h1>Login</h1>
+
+            <form action="/login" method="post" class="">
+                <div class="mb-3">
+                    <label class="form-label">Nome de usuário:</label>
+                    <input class="form-control" type="text" name="username" required>
+
+                    <label class="form-label">Senha:</label>
+                    <input class="form-control" type="password" name="password" required>
+                </div>
+                <button type="submit" class="btn btn-dark">Entrar</button>
+            </form>
+        </div>
+
+      <center>  <img src="img/image.png" class="img-fluid" width="600" height="400" alt="" srcset="">  </center>
+        
+        <%- include('partials/footer') %>
+
+    </body>
+
+</html>

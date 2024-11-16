@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="pt">
+
+<%- include('partials/head') %>
+<%- include('partials/navbar') %>
+
+    <title>Registro</title>
+
+    <body>
+       
+
+        <div class="container col-6">
+            <h1>Registro</h1>
+            <form action="/register" method="post">
+                <div class="mb-3">
+                    <label class="form-label">Nome de usuário:</label>
+                    <input class="form-control" type="text" name="username" required>
+
+                    <label class="form-label">Senha:</label>
+                    <input class="form-control" type="password" name="password" required minlength="6"
+                        placeholder="A senha deve ter ao menos 6 caracteres e incluir números e letras.">
+                    <br>
+                    <label class="form-label">Função:</label>
+                    <select class="form-control" name="role" id="role" onchange="toggleCompanyCodeField()">
+                        <option class="form-control" value="user">Usuário</option>
+                        <option class="form-control" value="admin">Administrador</option>
+                    </select>
+
+                    <!-- Campo para o Código da Empresa (visível apenas para admins) -->
+                    <div id="companyCodeField" style="display: none;">
+                        <label>Código da Empresa:</label>
+                        <input class="form-control" type="text" name="companyCode" placeholder="Insira o código da empresa">
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-dark form-control">Registrar</button>
+            </form>
+        </div>
+        <script>
+            // Função JavaScript para exibir ou ocultar o campo "Código da Empresa"
+            function toggleCompanyCodeField() {
+                const role = document.getElementById('role').value;
+                const companyCodeField = document.getElementById('companyCodeField');
+                companyCodeField.style.display = role === 'admin' ? 'block' : 'none';
+            }
+        </script>
+
+        <%- include('partials/footer') %>
+
+    </body>
+
+</html>

@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <%- include('partials/head') %>
+  <%- include('partials/navbar') %>
+  <title>Produtos</title>
+</head>
+<body>
+  <div class="container col-6">
+
+    <h1>Produtos</h1>
+    <form method="get" action="/products">
+      <div class="mb-3">
+      <input class="form-control" type="text" name="search" placeholder="Pesquisar produto" value="<%= search || '' %>">
+    </div class="d-flex justify-content-between">
+      <button type="submit"  class="btn btn-dark">Buscar</button>
+    </form>
+    <br>
+   
+    <br>
+    <ul>
+      <% if (products.length > 0) { %>
+        <% products.forEach(product => { %>
+          <li>
+          <strong><%= product.nome %></strong><br>
+          <strong>  Descrição: </strong> <%= product.descricao %> <br>
+          <strong>  Marca: </strong> <%= product.marca %> <br>
+          <strong> Estoque: </strong> <%= product.estoque %> <br>
+          <strong>Local: </strong>  <%= product.local %> <br>
+          <strong> Valor: </strong>  R$<%= product.valor.toFixed(2) %> <br>
+          <strong>  <label for="imagem">FOTO:</label> </strong> <br>
+
+          <% if (product.imagem) { %>
+            <img src="<%= product.imagem %>" alt="<%= product.nome %>" style="width: 150px; height: auto;"><br><br>
+          <% } %>
+    
+            <% if (userRole === 'admin') { %> <!-- Exibe apenas para administradores -->
+              <!-- Link para editar o produto -->
+              <a href="/products/<%= product._id %>/edit" class="btn btn-dark">Editar</a> |
+              
+              <!-- Formulário para deletar o produto -->
+              <form method="post" action="/products/<%= product._id %>/delete" style="display: inline;">
+                <button class="btn btn-dark" type="submit" onclick="return confirm('Tem certeza que deseja deletar este produto?');">Deletar</button>
+              </form>
+            <% } %>
+          </li>
+        <% }) %>
+      <% } else { %>
+        <p>Nenhum produto encontrado.</p>
+      <% } %>
+    </ul>
+ <br>
+ <div>
+  <% if (userRole === 'admin') { %>
+      <a href="/menu" class="btn btn-dark">Retornar ao Menu</a>
+  <% } else { %>
+      <a href="/products" class="btn btn-dark">Retornar à Consulta</a>
+  <% } %>
+</div>
+
+    
+      
+  
+  </div>
+
+  <%- include('partials/footer') %>
+
+</body>
+</html>

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="pt">
+
+<%- include('partials/head') %>
+<%- include('partials/navbar') %>
+
+    <title>Adicionar Produto</title>
+    <style>
+        .ajustar{
+            max-width: 100%;
+            height: auto;
+        }
+    </style>
+
+<body>
+    
+    <div class="container col-6">
+        <h1>Adicionar Produto</h1>
+    <form action="/add-product" method="post" enctype="multipart/form-data">
+        <div class="mb-3">
+        <label class="form-label">Nome do Produto:</label>
+        <input type="text" name="nome" class="form-control" required>
+
+        <label class="form-label">Descrição:</label>
+        <input type="text" name="descricao" class="form-control" required>
+
+        <label  class="form-label">Marca:</label>
+        <input type="text" name="marca" class="form-control" required>
+
+        <label class="form-label">Estoque:</label>
+        <input type="number" name="estoque" min="0"  class="form-control" required>
+
+        <label class="form-label">Local:</label>
+        <input type="text" name="local" class="form-control" required>
+
+        <label class="form-label">Valor:</label>
+        <input type="number" name="valor" step="0.01" min="0"  class="form-control" required>
+
+        <label class="form-label">imagem:</label>
+        <input type="file" name="imagem" accept="image/*">
+    </div>
+
+    <div class="d-flex justify-content-between">
+        <button type="submit" class="btn btn-dark ajustar">Adicionar Produto</button>
+        <a href="/menu" class="btn btn-dark ajustar">Retornar ao Menu</a>
+    </div>
+          
+    </form> 
+</div>
+
+<%- include('partials/footer') %>
+</body>
+</html>
