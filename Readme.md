@@ -1,4 +1,4 @@
->>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> ## FRAMEORKS ULTILIZADOS  
+## FRAMEORKS ULTILIZADOS  
 
 ## NODE.JS
 O Node.js é um ambiente de execução de JavaScript no lado do servidor, baseado no motor V8 do Google Chrome. Ele permite a criação de aplicações escaláveis e rápidas, com foco em I/O assíncrona e não bloqueante. Com um vasto ecossistema de pacotes, o Node.js é amplamente usado para desenvolver servidores web e APIs.
