@@ -1,4 +1,4 @@
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="pt">
 <head>
   <%- include('partials/head') %>
@@ -6,20 +6,20 @@
   <title>Menu de Gerenciamento de Produtos</title>
 </head>
 <body>
-  <div class="container col-6">
-    <br><br>
-    <h3>Menu de Gerenciamento de Produtos</h3>
-    <br>
-    <!-- Formulário para Adicionar Produtos -->
-    <form action="/add-product" method="get">
-      <button type="submit" class="btn btn-dark mb-3">Adicionar Produtos</button>
-    </form>
+  <div class="container col-6 mt-5">
+    <h3 class="text-center mb-4">Menu de Gerenciamento de Produtos</h3>
+    <div class="d-grid gap-3"> <!-- Alinhamento dos botões -->
+      <!-- Formulário para Adicionar Produtos -->
+      <form action="/add-product" method="get">
+        <button type="submit" class="btn btn-custom">Adicionar Produtos</button>
+      </form>
 
-    <!-- Formulário para Consultar Produtos -->
-    <form action="/products" method="get">
-      <button type="submit" class="btn btn-dark mb-3">Consultar Produtos Cadastrados</button>
-    </form>
-</div>
+      <!-- Formulário para Consultar Produtos -->
+      <form action="/products" method="get">
+        <button type="submit" class="btn btn-custom">Consultar Produtos </button>
+      </form>
+    </div>
+  </div>
   <%- include('partials/footer') %>
 </body>
 </html>

@@ -1,46 +1,50 @@
 <!DOCTYPE html>
 <html lang="pt">
-<head>
+
   <%- include('partials/head') %>
   <%- include('partials/navbar') %>
   <title>Produtos</title>
-</head>
-<body>
-  <div class="container col-6">
 
-    <h1>Produtos</h1>
-    <form method="get" action="/products">
+<body>
+  <div class="container col-6 mt-5">
+    <h1 class="text-center mb-4">Produtos</h1>
+    <form method="get" action="/products" class="form-custom">
       <div class="mb-3">
-      <input class="form-control" type="text" name="search" placeholder="Pesquisar produto" value="<%= search || '' %>">
-    </div class="d-flex justify-content-between">
-      <button type="submit"  class="btn btn-dark">Buscar</button>
+        <input class="form-control" type="text" name="search" placeholder="Pesquisar produto" value="<%= search || '' %>">
+      </div>
+
+      <div class="d-flex justify-content-between">
+        <button type="submit" class="btn btn-custom">Buscar</button>
+      </div>
     </form>
     <br>
-   
-    <br>
-    <ul>
+    
+    <ul class="list-unstyled">
       <% if (products.length > 0) { %>
         <% products.forEach(product => { %>
-          <li>
-          <strong><%= product.nome %></strong><br>
-          <strong>  Descrição: </strong> <%= product.descricao %> <br>
-          <strong>  Marca: </strong> <%= product.marca %> <br>
-          <strong> Estoque: </strong> <%= product.estoque %> <br>
-          <strong>Local: </strong>  <%= product.local %> <br>
-          <strong> Valor: </strong>  R$<%= product.valor.toFixed(2) %> <br>
-          <strong>  <label for="imagem">FOTO:</label> </strong> <br>
+          <li class="product-item mb-4 p-3 border rounded">
+            <strong><%= product.nome %></strong><br>
+            <strong>Descrição: </strong> <%= product.descricao %><br>
+            <strong>Marca: </strong> <%= product.marca %><br>
+            <strong>Estoque: </strong> <%= product.estoque %><br>
+            <strong>Local: </strong> <%= product.local %><br>
+            <strong>Valor: </strong> R$<%= product.valor.toFixed(2) %><br>
+            <strong><label for="imagem">Foto:</label></strong><br>
+            
+            <% if (product.imagem) { %>
+              <img src="<%= product.imagem %>" alt="<%= product.nome %>" style="width: 150px; height: auto;"><br><br>
+            <% } %>
 
-          <% if (product.imagem) { %>
-            <img src="<%= product.imagem %>" alt="<%= product.nome %>" style="width: 150px; height: auto;"><br><br>
-          <% } %>
-    
-            <% if (userRole === 'admin') { %> <!-- Exibe apenas para administradores -->
-              <!-- Link para editar o produto -->
-              <a href="/products/<%= product._id %>/edit" class="btn btn-dark">Editar</a> |
-              
-              <!-- Formulário para deletar o produto -->
+            <button class="btn btn-custom" onclick="showProductLocation(<%= product.latitude %>, <%= product.longitude %>)">
+              Ver no Mapa
+            </button>
+           <a href="https://app.mappedin.com/map/674210c7ed01dd000b4156d7"> <button class="btn btn-custom"> Planta da Loja </button> </a> 
+
+            <% if (userRole === 'admin') { %>
+              <!-- Admin actions: Edit and Delete -->
+              <a href="/products/<%= product._id %>/edit" class="btn btn-custom">Editar</a> |
               <form method="post" action="/products/<%= product._id %>/delete" style="display: inline;">
-                <button class="btn btn-dark" type="submit" onclick="return confirm('Tem certeza que deseja deletar este produto?');">Deletar</button>
+                <button class="btn btn-delete" type="submit" onclick="return confirm('Tem certeza que deseja deletar este produto?');">Deletar</button>
               </form>
             <% } %>
           </li>
@@ -49,19 +53,90 @@
         <p>Nenhum produto encontrado.</p>
       <% } %>
     </ul>
- <br>
- <div>
-  <% if (userRole === 'admin') { %>
-      <a href="/menu" class="btn btn-dark">Retornar ao Menu</a>
-  <% } else { %>
-      <a href="/products" class="btn btn-dark">Retornar à Consulta</a>
-  <% } %>
-</div>
 
-    
-      
-  
+    <br>
+    <div class="d-flex justify-content-center">
+      <% if (userRole === 'admin') { %>
+        <a href="/menu" class="btn btn-custom">Retornar ao Menu</a>
+      <% } else { %>
+        <a href="/products" class="btn btn-custom">Retornar à Consulta</a>
+      <% } %>
+    </div>
   </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script>
+    // Verifica se há status e exibe o pop-up correspondente
+    const urlParams = new URLSearchParams(window.location.search);
+    const status = urlParams.get('status');
+    const message = urlParams.get('message') || 'Algo deu errado.';
+
+    if (status === 'success') {
+      Swal.fire({
+        icon: 'success',
+        title: 'Realizado com sucesso!',
+        showConfirmButton: false,
+        timer: 2000
+      });
+    } else if (status === 'error') {
+      Swal.fire({
+        icon: 'error',
+        title: 'Erro!',
+        text: decodeURIComponent(message),
+      });
+    }
+  </script>
+
+  <br>
+
+  <div id="map" style="height: 500px;"></div>
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDTz_ICWaAzMebFlSGRmoskkAYNmWeJEtc"></script>
+
+  <script>
+    const userLocation = { lat: -3.0972974862680434, lng: -60.02331176313831 }; // Localização padrão do usuário
+    const map = new google.maps.Map(document.getElementById('map'), {
+        center: userLocation,
+        zoom: 12
+    });
+  
+    // Função para desenhar a rota no mapa
+    function showProductLocation(lat, lng) {
+        const productLocation = { lat, lng };
+        
+        const directionsService = new google.maps.DirectionsService();
+        const directionsRenderer = new google.maps.DirectionsRenderer({ map });
+  
+        // Configuração da rota
+        directionsService.route({
+            origin: userLocation,
+            destination: productLocation,
+            travelMode: 'DRIVING' // Modo de transporte
+        }, (result, status) => {
+            if (status === 'OK') {
+                directionsRenderer.setDirections(result); // Exibir a rota
+            } else {
+                alert('Erro ao calcular a rota: ' + status);
+            }
+        });
+  
+        // Faz a página rolar até o mapa
+        document.getElementById('map').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  
+    // Adiciona marcadores para os produtos
+    const products = <%- JSON.stringify(products) %>;
+    products.forEach(product => {
+        if (product.latitude && product.longitude) {
+            new google.maps.Marker({
+                position: { lat: product.latitude, lng: product.longitude },
+                map,
+                title: product.nome
+            });
+        }
+    });
+  </script>
+  
+  
 
   <%- include('partials/footer') %>
 

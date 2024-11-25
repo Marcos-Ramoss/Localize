@@ -32,7 +32,21 @@ const productSchema = new mongoose.Schema({
     imagem: {
         type: String
         
-    }
+    },
+
+    latitude: {
+        type: Number
+        
+    },
+
+    longitude: {
+        type: Number
+        
+    },
+   
+   
+
+    
 
 }, { timestamps: true });
 

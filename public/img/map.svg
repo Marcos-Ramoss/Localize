@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="400" height="400">
+    <rect id="location-1" x="10" y="10" width="30" height="30" fill="lightblue" />
+    <rect id="location-2" x="50" y="10" width="30" height="30" fill="lightgreen" />
+    <rect id="location-3" x="10" y="50" width="30" height="30" fill="lightcoral" />
+    <rect id="location-4" x="50" y="50" width="30" height="30" fill="lightgoldenrodyellow" />
+    <text x="15" y="25" font-size="8" fill="black">Location 1</text>
+    <text x="55" y="25" font-size="8" fill="black">Location 2</text>
+    <text x="15" y="65" font-size="8" fill="black">Location 3</text>
+    <text x="55" y="65" font-size="8" fill="black">Location 4</text>
+</svg>

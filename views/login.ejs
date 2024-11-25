@@ -4,28 +4,58 @@
 <%- include('partials/head') %>
 <%- include('partials/navbar') %>
 
-    <title>Login</title>
+<title>Login</title>
 
-    <body>
-        <div class="container col-6">
-            <h1>Login</h1>
+<body>
+    <div class="container col-6 mt-5">
+        <h1 class="text-center mb-4">Login</h1>
 
-            <form action="/login" method="post" class="">
-                <div class="mb-3">
-                    <label class="form-label">Nome de usuário:</label>
-                    <input class="form-control" type="text" name="username" required>
+        <form action="/login" method="post" class="form-custom">
+            <div class="mb-3">
+                <label class="form-label">Nome de usuário:</label>
+                <input class="form-control" type="text" name="username" required>
 
-                    <label class="form-label">Senha:</label>
-                    <input class="form-control" type="password" name="password" required>
+                <label class="form-label">Senha:</label>
+                <div class="input-group">
+                    <input class="form-control" id="passwordField" placeholder="Senha deve conter 6 dígitos" type="password" name="password" required>
+                    <button type="button" class="btn btn-outline-secondary" id="togglePassword">
+                        <i class="fa fa-eye" id="togglePasswordIcon"></i>
+                    </button>
                 </div>
-                <button type="submit" class="btn btn-dark">Entrar</button>
-            </form>
+            </div>
+
+            <button type="submit" class="btn btn-custom form-control">Entrar</button>
+        </form>
+        <br>
+        <div class="form-custom text-center">
+            <a href="/register">
+                <button type="button" class="btn btn-custom form-control">Registrar</button>
+            </a>
         </div>
 
-      <center>  <img src="img/image.png" class="img-fluid" width="600" height="400" alt="" srcset="">  </center>
-        
-        <%- include('partials/footer') %>
+        <br>
+        <center>
+            <img src="img/image.png" class="img-fluid" width="600" height="400" alt="">
+        </center>
+    </div>
 
-    </body>
+    <script>
+        // Função para alternar a visibilidade da senha
+        const togglePassword = document.getElementById('togglePassword');
+        const passwordField = document.getElementById('passwordField');
+        const togglePasswordIcon = document.getElementById('togglePasswordIcon');
+
+        togglePassword.addEventListener('click', () => {
+            const type = passwordField.type === 'password' ? 'text' : 'password';
+            passwordField.type = type;
+
+            // Alterna o ícone entre "fa-eye" e "fa-eye-slash"
+            togglePasswordIcon.classList.toggle('fa-eye');
+            togglePasswordIcon.classList.toggle('fa-eye-slash');
+        });
+    </script>
+
+    <%- include('partials/footer') %>
+</body>
 
 </html>

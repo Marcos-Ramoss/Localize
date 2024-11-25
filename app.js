@@ -1,6 +1,6 @@
 const express = require('express');
 const path = require('path');
-const QRCode = require('qrcode'); 
+const QRCode = require('qrcode');
 const app = express();
 const mongoose = require('mongoose');
 const session = require('express-session');
@@ -9,6 +9,8 @@ const User = require('/Users/Marcos-Ramos/Desktop/Localize+/models/user');
 const Product = require('./models/Product');
 const flash = require('connect-flash');
 const multer = require('multer');
+const axios = require('axios');
+
 
 // Configuração do multer
 const storage = multer.diskStorage({
@@ -49,6 +51,7 @@ app.set('views', path.join(__dirname, 'views'));
 app.use(express.static(path.join(__dirname, 'public')));
 
 
+
 // conectando com o nosso banco de dados
 mongoose.connect('mongodb://localhost:27017/Localize+', {
     useNewUrlParser: true,
@@ -61,21 +64,17 @@ mongoose.connect('mongodb://localhost:27017/Localize+', {
 
 
 // Rota da nossa pagina principal
-app.get('/', (req, res) => {
-    res.render('index');
-});
-
 app.get('/menu', isAdmin, (req, res) => {
-    const role = req.session.role; 
-    res.render('menu-admin', { role });  
+    const role = req.session.role;
+    res.render('menu-admin', { role });
 });
 
 // Rota do nosso QR code Localize+
-app.get('/qrcode', async (req, res) => {
-    const url = 'http://localhost:3000/register'; 
+app.get('/', async (req, res) => {
+    const url = 'http://localhost:3000/register';
     try {
         const qrCodeImage = await QRCode.toDataURL(url);
-        res.render('qrcode', { qrCodeImage }); 
+        res.render('qrcode', { qrCodeImage });
     } catch (err) {
         console.error('Erro ao gerar o QR Code:', err);
         res.status(500).send('Erro ao gerar o QR Code');
@@ -84,7 +83,7 @@ app.get('/qrcode', async (req, res) => {
 
 // rota de registro 
 app.get('/register', (req, res) => {
-    res.render('register'); 
+    res.render('register');
 });
 
 app.post('/register', async (req, res) => {
@@ -132,6 +131,7 @@ app.post('/register', async (req, res) => {
             res.send('Erro ao registrar o usuário.');
         }
     }
+
 });
 
 
@@ -143,13 +143,13 @@ app.get('/login', (req, res) => {
 
 app.post('/login', async (req, res) => {
     const { username, password } = req.body;
-    
+
     try {
         const user = await User.findOne({ username });
 
         if (user && await bcrypt.compare(password, user.password)) {
             // Salva o ID do usuário e o papel (role) na sessão
-               req.session.user = {
+            req.session.user = {
                 id: user._id,
                 username: user.username,
                 role: user.role
@@ -161,7 +161,18 @@ app.post('/login', async (req, res) => {
                 res.redirect('/products'); // Redireciona usuários para a página de consulta de produtos
             }
         } else {
-            res.send('Credenciais inválidas.');
+            res.status(403).send(`
+                <html>
+                    <head>
+                        <title>Senha Incorreta</title>
+                        <meta http-equiv="refresh" content="3;url=/login"> <!-- Redireciona para login após 3 segundos -->
+                    </head>
+                    <body>
+                        <h1>Credencias Invalidas</h1>
+                        <p>Você será redirecionado para a página de login em 3 segundos...</p>
+                    </body>
+                </html>
+            `);
         }
     } catch (error) {
         console.error('Erro ao fazer login:', error);
@@ -180,6 +191,16 @@ app.post('/add-product', isAdmin, upload.single('imagem'), async (req, res) => {
     const imagem = req.file ? `/img/uploads/${req.file.filename}` : null;
 
     try {
+
+        // Chama a API de geocodificação
+        const geocodeUrl = `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(local)}&key=AIzaSyDTz_ICWaAzMebFlSGRmoskkAYNmWeJEtc`;
+        const geocodeResponse = await axios.get(geocodeUrl);
+        const location = geocodeResponse.data.results[0]?.geometry.location;
+
+        if (!location) {
+            return res.send('Localização inválida.');
+        }
+
         // Criação de um novo produto
         const newProduct = new Product({
             nome,
@@ -188,34 +209,50 @@ app.post('/add-product', isAdmin, upload.single('imagem'), async (req, res) => {
             local,
             valor,
             descricao,
-            imagem
+            imagem,
+            latitude: location.lat,
+            longitude: location.lng
+
         });
 
         await newProduct.save();
         console.log('Produto adicionado com sucesso:', newProduct);
         console.log('Arquivo enviado:', req.file);
         console.log('Dados recebidos:', req.body);
-        req.flash('success', 'Produto adicionado com sucesso!');
-        res.redirect('/add-product'); // Redireciona para a página de adição de produto
+
+        res.redirect('/add-product?status=success'); // Redireciona para a página de adição de produto
     } catch (err) {
         console.error('Erro ao adicionar o produto:', err);
+
 
         // Tratamento de erro de validação
         if (err.name === 'ValidationError') {
             return res.send(`Erro de validação: ${Object.values(err.errors).map(e => e.message).join(', ')}`);
         } else {
-            res.send('Erro ao adicionar o produto.');
+            res.status(403).send(`
+                <html>
+                    <head>
+                        <title>Erro ao adicionar o produto</title>
+                        <meta http-equiv="refresh" content="3;url=/add-product"> <!-- Redireciona para login após 3 segundos -->
+                    </head>
+                    <body>
+                        <h1>Erro ao adicionar o produto</h1>
+                        <p>Você será redirecionado para a página de login em 3 segundos...</p>
+                    </body>
+                </html>
+            `);
+
         }
     }
-   
-   
+
+
 });
 
 
 // Rota para consulta de produtos
 app.get('/products', async (req, res) => {
     const { search } = req.query;
-    const userRole = req.session.user ? req.session.user.role : 'user';  
+    const userRole = req.session.user ? req.session.user.role : 'user';
     try {
         let products = [];
         // Se houver um termo de pesquisa, filtra os produtos pelo nome
@@ -223,7 +260,6 @@ app.get('/products', async (req, res) => {
             const query = { nome: new RegExp(search, 'i') };
             products = await Product.find(query);
         }
-        
         // Renderiza a página com os produtos encontrados (ou vazia) e o termo de pesquisa
         res.render('products', { products, search, userRole });
     } catch (err) {
@@ -234,9 +270,9 @@ app.get('/products', async (req, res) => {
 
 
 // rota para edição de produtos
-app.get('/products/:id/edit',isAdmin, async (req, res) => {
+app.get('/products/:id/edit', isAdmin, async (req, res) => {
     const { id } = req.params;
-   
+
     try {
         const product = await Product.findById(id);
         if (product) {
@@ -252,18 +288,35 @@ app.get('/products/:id/edit',isAdmin, async (req, res) => {
 
 
 // Rota para atualizar o produto no banco de dados
-app.post('/products/:id/edit',isAdmin, upload.single('imagem'), async (req, res) => {
+app.post('/products/:id/edit', isAdmin, upload.single('imagem'), async (req, res) => {
     const { id } = req.params;
     const { nome, descricao, marca, estoque, local, valor } = req.body;
     const imagem = req.file ? `/img/uploads/${req.file.filename}` : undefined;
 
     try {
-        const updatedProduct = await Product.findByIdAndUpdate(id, { nome, marca, descricao, estoque, local, valor }, { new: true });
-        if (imagem) updatedProduct.imagem = imagem;  
+        let updateData = { nome, marca, estoque, local, valor, descricao };
+        if (local) {
+            const geocodeUrl = `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(local)}&key=AIzaSyDTz_ICWaAzMebFlSGRmoskkAYNmWeJEtc`;
+            const geocodeResponse = await axios.get(geocodeUrl);
+            const location = geocodeResponse.data.results[0]?.geometry.location;
 
+            if (!location) {
+                return res.send('Localização inválida. Por favor, verifique o endereço.');
+            }
+
+            updateData.latitude = location.lat;
+            updateData.longitude = location.lng;
+        }
+
+        if (imagem) {
+            updateData.imagem = imagem;
+        }
+
+        const updatedProduct = await Product.findByIdAndUpdate(id, { nome, marca, descricao, estoque, local, valor }, { new: true });
         await Product.findByIdAndUpdate(id, updatedProduct);
         if (updatedProduct) {
-            res.redirect('/products');
+            res.redirect('/products?status=success');
+
         } else {
             res.send('Erro ao atualizar o produto.');
         }
@@ -273,11 +326,11 @@ app.post('/products/:id/edit',isAdmin, upload.single('imagem'), async (req, res)
     }
 });
 
-app.post('/products/:id/delete',isAdmin, async (req, res) => {
+app.post('/products/:id/delete', isAdmin, async (req, res) => {
     const { id } = req.params;
     try {
         await Product.findByIdAndDelete(id);
-        res.redirect('/products');
+        res.redirect('/products?status=success');
     } catch (err) {
         console.error('Erro ao deletar o produto:', err);
         res.send('Erro ao deletar o produto.');
@@ -307,7 +360,18 @@ function isAdmin(req, res, next) {
     if (req.session.user && req.session.user.role === 'admin') {
         next();
     } else {
-        res.send('Acesso negado: somente administradores podem acessar esta página.');
+        res.status(403).send(`
+            <html>
+                <head>
+                    <title>Acesso Negado</title>
+                    <meta http-equiv="refresh" content="3;url=/login"> <!-- Redireciona para login após 3 segundos -->
+                </head>
+                <body>
+                    <h1>Acesso negado: somente administradores podem acessar esta página.</h1>
+                    <p>Você será redirecionado para a página de login em 3 segundos...</p>
+                </body>
+            </html>
+        `);
     }
 }
 
@@ -316,7 +380,18 @@ function isAdmin(req, res, next) {
     if (req.session.user && req.session.user.role === 'admin') {
         return next();
     } else {
-        res.status(403).send('Acesso negado: somente administradores podem acessar esta página.');
+        res.status(403).send(`
+            <html>
+                <head>
+                    <title>Acesso Negado</title>
+                    <meta http-equiv="refresh" content="3;url=/login"> <!-- Redireciona para login após 3 segundos -->
+                </head>
+                <body>
+                    <h1>Acesso negado: somente administradores podem acessar esta página.</h1>
+                    <p>Você será redirecionado para a página de login em 3 segundos...</p>
+                </body>
+            </html>
+        `);
     }
 }
 
@@ -359,7 +434,54 @@ app.post('/edit-product/:id', async (req, res) => {
 });
 
 
+// Parte de Localização 
+
+
+app.get('/planta', async (req, res) => {
+    const { search } = req.query;
+    const userRole = req.session.user ? req.session.user.role : 'user';
+    try {
+        let products = [];
+        if (search && search.trim() !== '') {
+            // Buscando produtos pelo nome (filtrando pelo nome do local)
+            products = await Product.find({ local: new RegExp(search, 'i') });
+        } else {
+            // Se não houver pesquisa, buscar todos os produtos
+            products = await Product.find();
+        }
+
+        // Usando a API de Geocodificação para buscar as coordenadas do local de cada produto
+        for (let product of products) {
+            const geocodeUrl = `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(product.local)}&key=AIzaSyDTz_ICWaAzMebFlSGRmoskkAYNmWeJEtc`;
+            const geocodeResponse = await axios.get(geocodeUrl);
+            const location = geocodeResponse.data.results[0]?.geometry.location;
+
+            if (location) {
+                product.latitude = location.lat;
+                product.longitude = location.lng;
+            } else {
+                product.latitude = null;
+                product.longitude = null;
+            }
+        }
+
+        res.render('planta', { products, search, userRole });
+    } catch (err) {
+        console.error('Erro ao buscar produtos:', err);
+        res.send('Erro ao buscar produtos.');
+    }
+});
+
+
+
+
+
+
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
     console.log(`Servidor rodando na porta ${PORT}`);
 });
+
+
+
+
