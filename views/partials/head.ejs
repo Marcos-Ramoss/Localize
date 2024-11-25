@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -12,203 +13,193 @@
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
 
   <style>
+    /* Estilo da  Navbar  */
+    .custom-navbar {
+      background-color: #222831;
+      box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+    }
 
-/* Estilo da  Navbar  */
-.custom-navbar {
-  background-color: #222831; 
-  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
-}
+    .custom-navbar .navbar-brand img {
+      border-radius: 8px;
+      transition: transform 0.3s ease;
+    }
 
-.custom-navbar .navbar-brand img {
-  border-radius: 8px; 
-  transition: transform 0.3s ease; 
-}
+    .custom-navbar .navbar-brand img:hover {
+      transform: scale(1.1);
+    }
 
-.custom-navbar .navbar-brand img:hover {
-  transform: scale(1.1); 
-}
+    .custom-navbar .nav-link {
+      font-size: 1.1rem;
+      font-weight: 500;
+      color: #f2f2f2;
+      transition: color 0.3s ease, transform 0.3s ease;
+    }
 
-.custom-navbar .nav-link {
-  font-size: 1.1rem; 
-  font-weight: 500; 
-  color: #f2f2f2; 
-  transition: color 0.3s ease, transform 0.3s ease; 
-}
+    .custom-navbar .nav-link:hover {
+      color: #00adb5;
+      transform: translateY(-2px);
+    }
 
-.custom-navbar .nav-link:hover {
-  color: #00adb5; 
-  transform: translateY(-2px);
-}
+    .custom-navbar .nav-link.active {
+      border-bottom: 2px solid #00adb5;
+    }
 
-.custom-navbar .nav-link.active {
-  border-bottom: 2px solid #00adb5; 
-}
+    .custom-navbar .navbar-toggler {
+      border: none;
+    }
 
-.custom-navbar .navbar-toggler {
-  border: none;
-}
+    .custom-navbar .navbar-toggler-icon {
+      background-image: url('data:image/svg+xml;charset=UTF8,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 30"%3E%3Cpath stroke="rgba%28255,255,255,1%29" stroke-width="2" d="M4 7h22M4 15h22M4 23h22"/%3E%3C/svg%3E');
+    }
 
-.custom-navbar .navbar-toggler-icon {
-  background-image: url('data:image/svg+xml;charset=UTF8,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 30"%3E%3Cpath stroke="rgba%28255,255,255,1%29" stroke-width="2" d="M4 7h22M4 15h22M4 23h22"/%3E%3C/svg%3E');
-}
-
-/* Fim Estilo da  Navbar  */
-
+    /* Fim Estilo da  Navbar  */
 
 
 
 
 
 
-/* Estilo para os botões Menu */
-.btn-custom {
-  background-color: #222831; 
-  color: #f2f2f2; 
-  font-size: 1.1rem; 
-  font-weight: 500; 
-  padding: 10px 20px; 
-  border: none; 
-  border-radius: 8px;
-  transition: background-color 0.3s ease, transform 0.2s ease; 
-}
 
-.btn-delete{
-  background-color: red; 
-  color: #f2f2f2;
-  font-size: 1.1rem; 
-  font-weight: 500; 
-  padding: 10px 20px; 
-  border: none; 
-  border-radius: 8px;
-  transition: background-color 0.3s ease, transform 0.2s ease; 
-}
+    /* Estilo para os botões Menu */
+    .btn-custom {
+      background-color: #222831;
+      color: #f2f2f2;
+      font-size: 1.1rem;
+      font-weight: 500;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 8px;
+      transition: background-color 0.3s ease, transform 0.2s ease;
+    }
 
-.btn-delete:hover{
-  background-color: red; 
-  transform: scale(1.05); 
-}
+    .btn-delete {
+      background-color: red;
+      color: #f2f2f2;
+      font-size: 1.1rem;
+      font-weight: 500;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 8px;
+      transition: background-color 0.3s ease, transform 0.2s ease;
+    }
 
-
-.btn-custom:hover {
-  background-color: #00adb5; 
-  transform: scale(1.05); 
-}
-
-/* Alinhamento do texto */
-.text-center {
-  text-align: center;
-  font-family: 'Arial', sans-serif; 
-  color: #333; 
-}
-
-/* Espaçamento entre os itens */
-.mt-5 {
-  margin-top: 5rem !important;
-}
-
-.mb-4 {
-  margin-bottom: 1.5rem !important;
-}
-
-.d-grid {
-  display: grid;
-  gap: 1rem; /
-}
+    .btn-delete:hover {
+      background-color: red;
+      transform: scale(1.05);
+    }
 
 
-/* Adicionando espaçamento interno */
-.custom-navbar .navbar-nav .nav-item {
-  margin: 0 10px;
-}
-/* Fim  Estilo para os botões Menu */
+    .btn-custom:hover {
+      background-color: #00adb5;
+      transform: scale(1.05);
+    }
 
-      .elemento{
+    /* Alinhamento do texto */
+    .text-center {
+      text-align: center;
+      font-family: 'Arial', sans-serif;
+      color: #333;
+    }
+
+    /* Espaçamento entre os itens */
+    .mt-5 {
+      margin-top: 5rem !important;
+    }
+
+    .mb-4 {
+      margin-bottom: 1.5rem !important;
+    }
+
+    .d-grid {
+      display: grid;
+      gap: 1rem;/
+    }
+
+
+    /* Adicionando espaçamento interno */
+    .custom-navbar .navbar-nav .nav-item {
+      margin: 0 10px;
+    }
+
+    /* Fim  Estilo para os botões Menu */
+
+    .elemento {
       padding-left: 20px;
     }
 
- 
 
 
 
 
- /* Estilo o formulário de add-Product */
-.form-custom {
-  background-color: #f7f8f8; 
-  padding: 20px;
-  border-radius: 8px; 
-  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); 
-}
+
+    /* Estilo o formulário de add-Product */
+    .form-custom {
+      background-color: #f7f8f8;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    }
 
 
-.form-custom .form-label {
-  font-weight: 500; 
-  color: #333; 
-}
+    .form-custom .form-label {
+      font-weight: 500;
+      color: #333;
+    }
 
-/* Espaçamento entre os campos */
-.form-custom .form-control {
-  border-radius: 6px; 
-  border: 1px solid #ced4da; 
-  transition: box-shadow 0.3s ease, border-color 0.3s ease; 
-}
+    /* Espaçamento entre os campos */
+    .form-custom .form-control {
+      border-radius: 6px;
+      border: 1px solid #ced4da;
+      transition: box-shadow 0.3s ease, border-color 0.3s ease;
+    }
 
-.form-custom .form-control:focus {
-  border-color: #00adb5; 
-  box-shadow: 0px 0px 5px rgba(0, 173, 181, 0.5); 
-}
+    .form-custom .form-control:focus {
+      border-color: #00adb5;
+      box-shadow: 0px 0px 5px rgba(0, 173, 181, 0.5);
+    }
 
-/* Estilo dos botões */
-.btn-custom {
-  background-color: #222831; 
-  color: #f2f2f2;
-  font-size: 1.1rem; 
-  font-weight: 500; 
-  padding: 10px 20px; 
-  border: none; 
-  border-radius: 8px; 
-  transition: background-color 0.3s ease, transform 0.2s ease; 
-}
+    /* Estilo dos botões */
+    .btn-custom {
+      background-color: #222831;
+      color: #f2f2f2;
+      font-size: 1.1rem;
+      font-weight: 500;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 8px;
+      transition: background-color 0.3s ease, transform 0.2s ease;
+    }
 
-.btn-custom:hover {
-  background-color: #00adb5; 
-  transform: scale(1.05); 
-}
+    .btn-custom:hover {
+      background-color: #00adb5;
+      transform: scale(1.05);
+    }
 
-/* Espaçamento geral */
-.mt-5 {
-  margin-top: 5rem !important;
-}
+    /* Espaçamento geral */
+    .mt-5 {
+      margin-top: 5rem !important;
+    }
 
-.mb-4 {
-  margin-bottom: 1.5rem !important;
-}
+    .mb-4 {
+      margin-bottom: 1.5rem !important;
+    }
 
-.mt-3 {
-  margin-top: 1rem !important;
-}
-   
-
-
-
-
+    .mt-3 {
+      margin-top: 1rem !important;
+    }
 
 
 
 
 
 
-/*footer da aplicalção*/
 
 
 
 
 
-  
+    /*footer da aplicalção*/
   </style>
 </head>
+
 <body>
-
-
-
-
-

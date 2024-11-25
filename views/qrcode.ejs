@@ -3,46 +3,49 @@
 
 <head>
     <%- include('partials/head') %>
-   
-    <title>QR Code - Acesso à Aplicação</title>
-    <style>
-        /* Estilos para centralizar o conteúdo e definir o fundo preto */
-        body {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-            background-color: black;
-            color: white;
-            text-align: center;
-            font-family: Arial, sans-serif;
-        }
-        .container {
-            max-width: 500px;
-            padding: 20px;
-        }
-        img {
-            margin-top: 20px;
-            width: 250px;
-            height: 250px;
-        }
-        button{
-            position: absolute;
-            top: 20px;
-            left: 20px;
-            padding: 10px 15px;
-            background-color: #333;
-            color: white;
-            text-decoration: none;
-            border-radius: 5px;
-            font-size: 16px;
-        }
-    </style>
+
+        <title>QR Code - Acesso à Aplicação</title>
+        <style>
+            /* Estilos para centralizar o conteúdo e definir o fundo preto */
+            body {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                height: 100vh;
+                margin: 0;
+                background-color: black;
+                color: white;
+                text-align: center;
+                font-family: Arial, sans-serif;
+            }
+
+            .container {
+                max-width: 500px;
+                padding: 20px;
+            }
+
+            img {
+                margin-top: 20px;
+                width: 250px;
+                height: 250px;
+            }
+
+            button {
+                position: absolute;
+                top: 20px;
+                left: 20px;
+                padding: 10px 15px;
+                background-color: #333;
+                color: white;
+                text-decoration: none;
+                border-radius: 5px;
+                font-size: 16px;
+            }
+        </style>
 </head>
 
 <body>
-    <a href="/register"> <button type="submit" class="btn btn-light">  Retornar a Localize+ </button> </a>
+    <a href="/register"> <button type="submit" class="btn btn-light"> Retornar a Localize+ </button> </a>
     <br><br>
     <div class="container">
         <h1>Acesse a Aplicação pelo QR Code</h1>
@@ -50,6 +53,7 @@
         <img src="<%= qrCodeImage %>" alt="QR Code para acessar a aplicação">
     </div>
 
-   
+
 </body>
+
 </html>

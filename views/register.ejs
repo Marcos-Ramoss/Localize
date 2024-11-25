@@ -2,96 +2,98 @@
 <html lang="pt">
 
 <%- include('partials/head') %>
-<%- include('partials/navbar') %>
+    <%- include('partials/navbar') %>
 
-<title>Registro</title>
+        <title>Registro</title>
 
-<body>
-    <div class="container col-6 mt-5">
-        <h1 class="text-center mb-4">Registro</h1>
+        <body>
+            <div class="container col-6 mt-5">
+                <h1 class="text-center mb-4">Registro</h1>
 
-        <form action="/register" method="post" class="form-custom">
-            <div class="mb-3">
-                <label class="form-label">Nome de usuário:</label>
-                <input class="form-control" type="text" name="username" required>
+                <form action="/register" method="post" class="form-custom">
+                    <div class="mb-3">
+                        <label class="form-label">Nome de usuário:</label>
+                        <input class="form-control" type="text" name="username" required>
 
-                <label class="form-label">Senha:</label>
-                <div class="input-group">
-                    <input class="form-control" type="password" name="password" id="passwordField" required minlength="6"
-                        placeholder="A senha deve ter ao menos 6 caracteres e incluir números e letras.">
-                    <button type="button" class="btn btn-outline-secondary" id="togglePassword">
-                        <i class="fa fa-eye" id="togglePasswordIcon"></i>
-                    </button>
-                </div>
+                        <label class="form-label">Senha:</label>
+                        <div class="input-group">
+                            <input class="form-control" type="password" name="password" id="passwordField" required
+                                minlength="6"
+                                placeholder="A senha deve ter ao menos 6 caracteres e incluir números e letras.">
+                            <button type="button" class="btn btn-outline-secondary" id="togglePassword">
+                                <i class="fa fa-eye" id="togglePasswordIcon"></i>
+                            </button>
+                        </div>
+
+                        <br>
+                        <label class="form-label">Função:</label>
+                        <select class="form-control" name="role" id="role" onchange="toggleCompanyCodeField()">
+                            <option value="user">Usuário</option>
+                            <option value="admin">Administrador</option>
+                        </select>
+
+                        <!-- Campo para o Código da Empresa (visível apenas para admins) -->
+                        <div id="companyCodeField" style="display: none;">
+                            <label class="form-label">Código da Empresa:</label>
+                            <div class="input-group">
+                                <input class="form-control" type="password" id="companyCodeFieldInput"
+                                    name="companyCode" placeholder="Insira o código da empresa">
+                                <button type="button" class="btn btn-outline-secondary" id="toggleCompanyCodePassword">
+                                    <i class="fa fa-eye" id="toggleCompanyCodePasswordIcon"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn btn-custom form-control">Registrar</button>
+                </form>
 
                 <br>
-                <label class="form-label">Função:</label>
-                <select class="form-control" name="role" id="role" onchange="toggleCompanyCodeField()">
-                    <option value="user">Usuário</option>
-                    <option value="admin">Administrador</option>
-                </select>
-
-                <!-- Campo para o Código da Empresa (visível apenas para admins) -->
-                <div id="companyCodeField" style="display: none;">
-                    <label class="form-label">Código da Empresa:</label>
-                    <div class="input-group">
-                        <input class="form-control" type="password" id="companyCodeFieldInput" name="companyCode" placeholder="Insira o código da empresa">
-                        <button type="button" class="btn btn-outline-secondary" id="toggleCompanyCodePassword">
-                            <i class="fa fa-eye" id="toggleCompanyCodePasswordIcon"></i>
-                        </button>
-                    </div>
+                <div class="form-custom text-center">
+                    <a href="/login">
+                        <button type="submit" class="btn btn-custom form-control">Login</button>
+                    </a>
                 </div>
             </div>
 
-            <button type="submit" class="btn btn-custom form-control">Registrar</button>
-        </form>
+            <script>
+                // Função JavaScript para exibir ou ocultar o campo "Código da Empresa"
+                function toggleCompanyCodeField() {
+                    const role = document.getElementById('role').value;
+                    const companyCodeField = document.getElementById('companyCodeField');
+                    companyCodeField.style.display = role === 'admin' ? 'block' : 'none';
+                }
 
-        <br>
-        <div class="form-custom text-center">
-            <a href="/login">
-                <button type="submit" class="btn btn-custom form-control">Login</button>
-            </a>
-        </div>
-    </div>
+                // Função para alternar a visibilidade da senha
+                const togglePassword = document.getElementById('togglePassword');
+                const passwordField = document.getElementById('passwordField');
+                const togglePasswordIcon = document.getElementById('togglePasswordIcon');
 
-    <script>
-        // Função JavaScript para exibir ou ocultar o campo "Código da Empresa"
-        function toggleCompanyCodeField() {
-            const role = document.getElementById('role').value;
-            const companyCodeField = document.getElementById('companyCodeField');
-            companyCodeField.style.display = role === 'admin' ? 'block' : 'none';
-        }
+                togglePassword.addEventListener('click', () => {
+                    const type = passwordField.type === 'password' ? 'text' : 'password';
+                    passwordField.type = type;
 
-        // Função para alternar a visibilidade da senha
-        const togglePassword = document.getElementById('togglePassword');
-        const passwordField = document.getElementById('passwordField');
-        const togglePasswordIcon = document.getElementById('togglePasswordIcon');
+                    // Alterna o ícone entre "fa-eye" e "fa-eye-slash"
+                    togglePasswordIcon.classList.toggle('fa-eye');
+                    togglePasswordIcon.classList.toggle('fa-eye-slash');
+                });
 
-        togglePassword.addEventListener('click', () => {
-            const type = passwordField.type === 'password' ? 'text' : 'password';
-            passwordField.type = type;
+                // Função para alternar a visibilidade do Código da Empresa
+                const toggleCompanyCodePassword = document.getElementById('toggleCompanyCodePassword');
+                const companyCodeFieldInput = document.getElementById('companyCodeFieldInput');
+                const toggleCompanyCodePasswordIcon = document.getElementById('toggleCompanyCodePasswordIcon');
 
-            // Alterna o ícone entre "fa-eye" e "fa-eye-slash"
-            togglePasswordIcon.classList.toggle('fa-eye');
-            togglePasswordIcon.classList.toggle('fa-eye-slash');
-        });
+                toggleCompanyCodePassword.addEventListener('click', () => {
+                    const type = companyCodeFieldInput.type === 'password' ? 'text' : 'password';
+                    companyCodeFieldInput.type = type;
 
-        // Função para alternar a visibilidade do Código da Empresa
-        const toggleCompanyCodePassword = document.getElementById('toggleCompanyCodePassword');
-        const companyCodeFieldInput = document.getElementById('companyCodeFieldInput');
-        const toggleCompanyCodePasswordIcon = document.getElementById('toggleCompanyCodePasswordIcon');
+                    // Alterna o ícone entre "fa-eye" e "fa-eye-slash"
+                    toggleCompanyCodePasswordIcon.classList.toggle('fa-eye');
+                    toggleCompanyCodePasswordIcon.classList.toggle('fa-eye-slash');
+                });
+            </script>
 
-        toggleCompanyCodePassword.addEventListener('click', () => {
-            const type = companyCodeFieldInput.type === 'password' ? 'text' : 'password';
-            companyCodeFieldInput.type = type;
-
-            // Alterna o ícone entre "fa-eye" e "fa-eye-slash"
-            toggleCompanyCodePasswordIcon.classList.toggle('fa-eye');
-            toggleCompanyCodePasswordIcon.classList.toggle('fa-eye-slash');
-        });
-    </script>
-
-    <%- include('partials/footer') %>
-</body>
+            <%- include('partials/footer') %>
+        </body>
 
 </html>

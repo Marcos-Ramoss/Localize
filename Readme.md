@@ -21,9 +21,6 @@ O framework Session em JavaScript permite gerenciar sessões de usuário, armaze
 ## USER
 O framework User JavaScript é uma abordagem para personalizar e aprimorar a experiência de navegação no navegador usando JavaScript. Ele permite que o usuário modifique dinamicamente o comportamento de páginas web por meio de scripts executados no lado do cliente. Essa prática é popular em extensões de navegador, como o Tampermonkey, para ajustes personalizados de conteúdo e funcionalidades de sites.
 
-## FLASH
-O FlashJavaScript é um framework para desenvolvimento de aplicações web interativas e dinâmicas, utilizando JavaScript em conjunto com o Adobe Flash. Ele permite criar interfaces ricas, com animações e recursos multimídia. Embora tenha sido popular no passado, o uso de Flash foi amplamente substituído por tecnologias como HTML5, CSS3 e JavaScript puro.
-
 ## Multer
 O Multer é um middleware de Node.js para manipulação de arquivos, utilizado em conjunto com o Express. Ele facilita o upload de arquivos, suportando diferentes tipos de armazenamento, como local ou na nuvem. Oferece recursos para gerenciar tipos, tamanhos e limites de arquivos enviados.
 
@@ -70,3 +67,6 @@ A API Google Maps Places permite buscar informações sobre locais, como restaur
 
 ## (GOOGLE MAPS) API ROUTERS
 A API de roteadores do Google Maps permite calcular rotas e direções entre locais usando dados de mapas e tráfego em tempo real. Ela suporta diversos modos de transporte, como carro, bicicleta, transporte público e a pé. A API fornece informações detalhadas sobre distância, duração e alternativas de rotas.
+
+## (GOOGLE MAPS) API GEOCODIFICAÇÃO
+A API de Geocodificação do Google Maps permite converter endereços em coordenadas geográficas (latitude e longitude) e vice-versa. Em JavaScript, usa-se o geocoder.geocode() para buscar coordenadas a partir de um endereço ou geocoder.reverseGeocode() para obter o endereço a partir das coordenadas. A resposta é manipulada com um callback que retorna os resultados da busca.

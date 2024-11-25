@@ -2,67 +2,68 @@
 <html lang="pt">
 
 <%- include('partials/head') %>
-<%- include('partials/navbar') %>
+  <%- include('partials/navbar') %>
 
-<title>Adicionar Produto</title>
+    <title>Adicionar Produto</title>
 
-<body>
-  <div class="container col-6 mt-5">
-    <h1 class="text-center mb-4">Adicionar Produto</h1>
-    <form action="add-product" method="post" enctype="multipart/form-data" class="form-custom">
-      <div class="mb-3">
-        <label class="form-label">Nome do Produto:</label>
-        <input type="text" name="nome" class="form-control" required>
+    <body>
+      <div class="container col-6 mt-5">
+        <h1 class="text-center mb-4">Adicionar Produto</h1>
+        <form action="add-product" method="post" enctype="multipart/form-data" class="form-custom">
+          <div class="mb-3">
+            <label class="form-label">Nome do Produto:</label>
+            <input type="text" name="nome" class="form-control" required>
 
-        <label class="form-label mt-3">Descrição:</label>
-        <input type="text" name="descricao" class="form-control" required>
+            <label class="form-label mt-3">Descrição:</label>
+            <input type="text" name="descricao" class="form-control" required>
 
-        <label class="form-label mt-3">Marca:</label>
-        <input type="text" name="marca" class="form-control" required>
+            <label class="form-label mt-3">Marca:</label>
+            <input type="text" name="marca" class="form-control" required>
 
-        <label class="form-label mt-3">Estoque:</label>
-        <input type="number" name="estoque" min="0" class="form-control" required>
+            <label class="form-label mt-3">Estoque:</label>
+            <input type="number" name="estoque" min="0" class="form-control" required>
 
-        <label class="form-label mt-3">Local:</label>
-        <input type="text" name="local" placeholder="Local (ex: Rua monte granaro)" class="form-control" required>
+            <label class="form-label mt-3">Local:</label>
+            <input type="text" name="local" placeholder="Local (ex: Rua monte granaro)" class="form-control" required>
 
-        <label class="form-label mt-3">Valor:</label>
-        <input type="number" name="valor" step="0.01" min="0" class="form-control" required>
+            <label class="form-label mt-3">Valor:</label>
+            <input type="number" name="valor" step="0.01" min="0" class="form-control" required>
 
-        <label class="form-label mt-3">Imagem:</label>
-        <input type="file" name="imagem" accept="image/*" class="form-control">
+            <label class="form-label mt-3">Imagem:</label>
+            <input type="file" name="imagem" accept="image/*" class="form-control">
+          </div>
+
+          <div class="d-flex justify-content-between mt-4">
+            <button type="submit" class="btn btn-custom">Adicionar Produto</button>
+            <a href="/menu" class="btn btn-custom">Retornar ao Menu</a>
+          </div>
+        </form>
       </div>
 
-      <div class="d-flex justify-content-between mt-4">
-        <button type="submit" class="btn btn-custom">Adicionar Produto</button>
-        <a href="/menu" class="btn btn-custom">Retornar ao Menu</a>
-      </div>
-    </form>
-  </div>
+      <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+      <script>
+        // Verifica se há status e exibe o pop-up correspondente
+        const urlParams = new URLSearchParams(window.location.search);
+        const status = urlParams.get('status');
+        const message = urlParams.get('message') || 'Algo deu errado.';
 
-  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-  <script>
-    // Verifica se há status e exibe o pop-up correspondente
-    const urlParams = new URLSearchParams(window.location.search);
-    const status = urlParams.get('status');
-    const message = urlParams.get('message') || 'Algo deu errado.';
+        if (status === 'success') {
+          Swal.fire({
+            icon: 'success',
+            title: 'Adicionado com sucesso!',
+            showConfirmButton: false,
+            timer: 2000
+          });
+        } else if (status === 'error') {
+          Swal.fire({
+            icon: 'error',
+            title: 'Erro!',
+            text: decodeURIComponent(message),
+          });
+        }
+      </script>
 
-    if (status === 'success') {
-      Swal.fire({
-        icon: 'success',
-        title: 'Adicionado com sucesso!',
-        showConfirmButton: false,
-        timer: 2000
-      });
-    } else if (status === 'error') {
-      Swal.fire({
-        icon: 'error',
-        title: 'Erro!',
-        text: decodeURIComponent(message),
-      });
-    }
-  </script>
+      <%- include('partials/footer') %>
+    </body>
 
-  <%- include('partials/footer') %>
-</body>
 </html>

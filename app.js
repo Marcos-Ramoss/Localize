@@ -63,7 +63,7 @@ mongoose.connect('mongodb://localhost:27017/Localize+', {
 });
 
 
-// Rota da nossa pagina principal
+// Rota da nossa pagina principal admin
 app.get('/menu', isAdmin, (req, res) => {
     const role = req.session.role;
     res.render('menu-admin', { role });
@@ -310,10 +310,10 @@ app.post('/products/:id/edit', isAdmin, upload.single('imagem'), async (req, res
 
         if (imagem) {
             updateData.imagem = imagem;
-        }
+        } 
 
-        const updatedProduct = await Product.findByIdAndUpdate(id, { nome, marca, descricao, estoque, local, valor }, { new: true });
-        await Product.findByIdAndUpdate(id, updatedProduct);
+        const updatedProduct = await Product.findByIdAndUpdate(id, updateData, { new: true });
+        
         if (updatedProduct) {
             res.redirect('/products?status=success');
 
@@ -326,6 +326,7 @@ app.post('/products/:id/edit', isAdmin, upload.single('imagem'), async (req, res
     }
 });
 
+// rota para deletar produto
 app.post('/products/:id/delete', isAdmin, async (req, res) => {
     const { id } = req.params;
     try {
@@ -432,49 +433,6 @@ app.post('/edit-product/:id', async (req, res) => {
         res.send('Erro ao atualizar o produto.');
     }
 });
-
-
-// Parte de Localização 
-
-
-app.get('/planta', async (req, res) => {
-    const { search } = req.query;
-    const userRole = req.session.user ? req.session.user.role : 'user';
-    try {
-        let products = [];
-        if (search && search.trim() !== '') {
-            // Buscando produtos pelo nome (filtrando pelo nome do local)
-            products = await Product.find({ local: new RegExp(search, 'i') });
-        } else {
-            // Se não houver pesquisa, buscar todos os produtos
-            products = await Product.find();
-        }
-
-        // Usando a API de Geocodificação para buscar as coordenadas do local de cada produto
-        for (let product of products) {
-            const geocodeUrl = `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(product.local)}&key=AIzaSyDTz_ICWaAzMebFlSGRmoskkAYNmWeJEtc`;
-            const geocodeResponse = await axios.get(geocodeUrl);
-            const location = geocodeResponse.data.results[0]?.geometry.location;
-
-            if (location) {
-                product.latitude = location.lat;
-                product.longitude = location.lng;
-            } else {
-                product.latitude = null;
-                product.longitude = null;
-            }
-        }
-
-        res.render('planta', { products, search, userRole });
-    } catch (err) {
-        console.error('Erro ao buscar produtos:', err);
-        res.send('Erro ao buscar produtos.');
-    }
-});
-
-
-
-
 
 
 const PORT = process.env.PORT || 3000;
