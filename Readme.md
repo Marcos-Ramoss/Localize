@@ -69,8 +69,5 @@ A API Google Maps Places permite buscar informações sobre locais, como restaur
 A API de roteadores do Google Maps permite calcular rotas e direções entre locais usando dados de mapas e tráfego em tempo real. Ela suporta diversos modos de transporte, como carro, bicicleta, transporte público e a pé. A API fornece informações detalhadas sobre distância, duração e alternativas de rotas.
 
 ## (GOOGLE MAPS) API GEOCODIFICAÇÃO
-<<<<<<< HEAD
+
 A API de Geocodificação do Google Maps permite converter endereços em coordenadas geográficas (latitude e longitude) e vice-versa. Em JavaScript, usa-se o geocoder.geocode() para buscar coordenadas a partir de um endereço ou geocoder.reverseGeocode() para obter o endereço a partir das coordenadas. A resposta é manipulada com um callback que retorna os resultados da busca.
-=======
-A API de Geocodificação do Google Maps permite converter endereços em coordenadas geográficas (latitude e longitude) e vice-versa. Em JavaScript, usa-se o geocoder.geocode() para buscar coordenadas a partir de um endereço ou geocoder.reverseGeocode() para obter o endereço a partir das coordenadas. A resposta é manipulada com um callback que retorna os resultados da busca.
->>>>>>> 46695d8f93affada3d78fe1f3b552ab8894404ed
