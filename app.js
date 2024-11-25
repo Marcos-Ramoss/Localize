@@ -193,7 +193,7 @@ app.post('/add-product', isAdmin, upload.single('imagem'), async (req, res) => {
     try {
 
         // Chama a API de geocodificação
-        const geocodeUrl = `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(local)}&key=AIzaSyDTz_ICWaAzMebFlSGRmoskkAYNmWeJEtc`;
+        const geocodeUrl = `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(local)}&key=suakey;
         const geocodeResponse = await axios.get(geocodeUrl);
         const location = geocodeResponse.data.results[0]?.geometry.location;
 
@@ -296,7 +296,7 @@ app.post('/products/:id/edit', isAdmin, upload.single('imagem'), async (req, res
     try {
         let updateData = { nome, marca, estoque, local, valor, descricao };
         if (local) {
-            const geocodeUrl = `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(local)}&key=AIzaSyDTz_ICWaAzMebFlSGRmoskkAYNmWeJEtc`;
+            const geocodeUrl = `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(local)}&key=suakey`;
             const geocodeResponse = await axios.get(geocodeUrl);
             const location = geocodeResponse.data.results[0]?.geometry.location;
 
