@@ -1,4 +1,4 @@
->>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> ## FRAMEORKS ULTILIZADOS  
+## FRAMEORKS ULTILIZADOS  
 
 ## NODE.JS
 O Node.js é um ambiente de execução de JavaScript no lado do servidor, baseado no motor V8 do Google Chrome. Ele permite a criação de aplicações escaláveis e rápidas, com foco em I/O assíncrona e não bloqueante. Com um vasto ecossistema de pacotes, o Node.js é amplamente usado para desenvolver servidores web e APIs.
@@ -33,7 +33,7 @@ O Path Framework é uma biblioteca JavaScript que facilita o gerenciamento de ro
 ## BOOTSTRAP
 O Bootstrap é um framework front-end que facilita o desenvolvimento de sites responsivos e móveis. Ele oferece uma coleção de componentes prontos, como botões, formulários e menus, que podem ser customizados. Combinando HTML, CSS e JavaScript, o Bootstrap permite a criação rápida de interfaces atraentes e funcionais.
 
->>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> ## DIRECTORIOS
+                            ## DIRECTORIOS
 
 ## PASTA MODELS
 A pasta "model" em JavaScript geralmente contém arquivos responsáveis pela definição das estruturas de dados e lógica de manipulação das informações. Esses arquivos podem incluir funções para interagir com o banco de dados, validar e formatar dados, além de gerenciar o fluxo de dados no backend. Em projetos MVC, o "model" serve para representar as entidades e regras de negócios do sistema.
@@ -60,7 +60,7 @@ O arquivo package-lock.json no JavaScript é gerado automaticamente pelo npm par
 ARQUIVO PRINCIPAL PARA RODAR TODA A APLICAÇÃO PELO TERMINAL NODE.
 
 
->>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> ## APIS ULTIZADAS NO PROJETO 
+         ## APIS ULTIZADAS NO PROJETO 
 
 ## (GOOGLE MAPS) API PLACES
 A API Google Maps Places permite buscar informações sobre locais, como restaurantes, hotéis e pontos turísticos, usando JavaScript. Com ela, é possível realizar buscas por tipo de lugar, nome ou localização geográfica. Os resultados incluem detalhes como nome, endereço, fotos e avaliações.
@@ -69,4 +69,8 @@ A API Google Maps Places permite buscar informações sobre locais, como restaur
 A API de roteadores do Google Maps permite calcular rotas e direções entre locais usando dados de mapas e tráfego em tempo real. Ela suporta diversos modos de transporte, como carro, bicicleta, transporte público e a pé. A API fornece informações detalhadas sobre distância, duração e alternativas de rotas.
 
 ## (GOOGLE MAPS) API GEOCODIFICAÇÃO
+<<<<<<< HEAD
 A API de Geocodificação do Google Maps permite converter endereços em coordenadas geográficas (latitude e longitude) e vice-versa. Em JavaScript, usa-se o geocoder.geocode() para buscar coordenadas a partir de um endereço ou geocoder.reverseGeocode() para obter o endereço a partir das coordenadas. A resposta é manipulada com um callback que retorna os resultados da busca.
+=======
+A API de Geocodificação do Google Maps permite converter endereços em coordenadas geográficas (latitude e longitude) e vice-versa. Em JavaScript, usa-se o geocoder.geocode() para buscar coordenadas a partir de um endereço ou geocoder.reverseGeocode() para obter o endereço a partir das coordenadas. A resposta é manipulada com um callback que retorna os resultados da busca.
+>>>>>>> 46695d8f93affada3d78fe1f3b552ab8894404ed
