@@ -36,7 +36,7 @@ O Path Framework é uma biblioteca JavaScript que facilita o gerenciamento de ro
 ## BOOTSTRAP
 O Bootstrap é um framework front-end que facilita o desenvolvimento de sites responsivos e móveis. Ele oferece uma coleção de componentes prontos, como botões, formulários e menus, que podem ser customizados. Combinando HTML, CSS e JavaScript, o Bootstrap permite a criação rápida de interfaces atraentes e funcionais.
 
->>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> ## DIRECTORIOS
+                            ## DIRECTORIOS
 
 ## PASTA MODELS
 A pasta "model" em JavaScript geralmente contém arquivos responsáveis pela definição das estruturas de dados e lógica de manipulação das informações. Esses arquivos podem incluir funções para interagir com o banco de dados, validar e formatar dados, além de gerenciar o fluxo de dados no backend. Em projetos MVC, o "model" serve para representar as entidades e regras de negócios do sistema.
@@ -63,7 +63,7 @@ O arquivo package-lock.json no JavaScript é gerado automaticamente pelo npm par
 ARQUIVO PRINCIPAL PARA RODAR TODA A APLICAÇÃO PELO TERMINAL NODE.
 
 
->>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> ## APIS ULTIZADAS NO PROJETO 
+         ## APIS ULTIZADAS NO PROJETO 
 
 ## (GOOGLE MAPS) API PLACES
 A API Google Maps Places permite buscar informações sobre locais, como restaurantes, hotéis e pontos turísticos, usando JavaScript. Com ela, é possível realizar buscas por tipo de lugar, nome ou localização geográfica. Os resultados incluem detalhes como nome, endereço, fotos e avaliações.
