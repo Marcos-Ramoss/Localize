@@ -44,6 +44,7 @@ build/Release
 
 # Dependency directories
 node_modules/
+**/node_modules/
 jspm_packages/
 
 # Snowpack dependency directory (https://snowpack.dev/)
@@ -142,3 +143,16 @@ dist
 .svelte-kit
 
 # End of https://www.toptal.com/developers/gitignore/api/node
+
+# Ignore cursor AI rules
+.cursor/rules/codacy.mdc
+
+# Garantir que node_modules seja ignorado em qualquer lugar
+node_modules/
+**/node_modules/
+**/node_modules/**
+
+# Arquivos de lock (opcional - alguns projetos preferem commitá-los)
+# package-lock.json
+# yarn.lock
+# pnpm-lock.yaml
